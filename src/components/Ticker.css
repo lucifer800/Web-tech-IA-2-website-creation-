@@ -1,0 +1,56 @@
+.ticker {
+  display: flex;
+  align-items: stretch;
+  height: 36px;
+  background: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border-dark);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  overflow: hidden;
+}
+
+.ticker__label {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 16px;
+  background: var(--accent-orange);
+  color: var(--bg-primary);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.ticker__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--bg-primary);
+  animation: blink 1.2s infinite;
+}
+
+.ticker__track {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.ticker__scroll {
+  display: flex;
+  gap: 48px;
+  white-space: nowrap;
+  animation: marquee 45s linear infinite;
+  padding-left: 24px;
+}
+
+.ticker__item {
+  display: flex;
+  gap: 10px;
+  color: var(--text-secondary);
+}
+
+.ticker__sport {
+  color: var(--accent-amber);
+}

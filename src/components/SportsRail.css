@@ -1,0 +1,210 @@
+.sports {
+  padding: 110px 0 90px;
+}
+
+.sports__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding: 0 var(--page-gutter);
+}
+
+.sports__label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  color: var(--accent-orange);
+}
+
+.sports__title {
+  margin: 10px 0 0;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: clamp(52px, 7vw, 104px);
+  line-height: 0.88;
+  text-transform: uppercase;
+}
+
+.sports__controls {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.sports__filters {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.sports__filter {
+  padding: 10px 16px;
+  border: 1px solid var(--border-light);
+  background: transparent;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+
+.sports__filter--active {
+  background: var(--accent-orange);
+  border-color: var(--accent-orange);
+  color: var(--bg-primary);
+}
+
+.sports__arrows {
+  display: flex;
+  gap: 6px;
+  margin-left: 12px;
+}
+
+.sports__arrow {
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--border-light);
+  background: transparent;
+  color: var(--text-primary);
+  font-size: 18px;
+  transition: all 0.2s;
+}
+
+.sports__arrow:hover {
+  background: var(--accent-orange);
+  border-color: var(--accent-orange);
+  color: var(--bg-primary);
+}
+
+.sports__rail {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 40px var(--page-gutter) 16px;
+  scroll-padding-left: var(--page-gutter);
+}
+
+.sports__rail::-webkit-scrollbar {
+  height: 4px;
+}
+
+.sports__card {
+  flex: none;
+  width: 290px;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-dark);
+  color: var(--text-primary);
+  transition: border-color 0.25s, transform 0.25s;
+}
+
+.sports__card:hover {
+  border-color: var(--accent-orange);
+  transform: translateY(-4px);
+  color: var(--text-primary);
+}
+
+.sports__card-image {
+  position: relative;
+  height: 320px;
+  overflow: hidden;
+  background: repeating-linear-gradient(135deg, #131720 0 10px, #0f121a 10px 20px);
+}
+
+.sports__card-placeholder {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: #4a5161;
+}
+
+.sports__card-number {
+  position: absolute;
+  top: 10px;
+  left: 14px;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: 72px;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--accent-orange);
+}
+
+.sports__card-cat {
+  position: absolute;
+  top: 18px;
+  right: 16px;
+  padding: 4px 8px;
+  background: var(--bg-primary);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+.sports__card-body {
+  padding: 18px 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sports__card-name {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 38px;
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+
+.sports__card-meta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.sports__card-meta-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--text-muted);
+}
+
+.sports__card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid var(--border-dark);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.sports__card-link {
+  color: var(--accent-orange);
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .sports__arrows {
+    display: none;
+  }
+
+  .sports__card {
+    width: 260px;
+  }
+}

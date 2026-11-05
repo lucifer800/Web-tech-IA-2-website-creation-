@@ -1,0 +1,357 @@
+diff --git a/src/App.jsx b/src/App.jsx
+index 18163f0..789b775 100644
+--- a/src/App.jsx
++++ b/src/App.jsx
+@@ -1,5 +1,7 @@
+ import Ticker from './components/Ticker';
+ import Navbar from './components/Navbar';
++import Hero from './components/Hero';
++import SportsRail from './components/SportsRail';
+ import Footer from './components/Footer';
+ 
+ function App() {
+@@ -7,9 +9,11 @@ function App() {
+     <div className="app">
+       <Ticker />
+       <Navbar />
++      <Hero />
++      <SportsRail />
+ 
+       <main>
+-        {/* Hero, Sports, Schedule, Standings, etc. — coming in future commits */}
++        {/* Schedule, Standings, etc. — coming in future commits */}
+       </main>
+ 
+       <Footer />
+diff --git a/src/components/SportsRail.css b/src/components/SportsRail.css
+new file mode 100644
+index 0000000..2f2ad59
+--- /dev/null
++++ b/src/components/SportsRail.css
+@@ -0,0 +1,210 @@
++.sports {
++  padding: 110px 0 90px;
++}
++
++.sports__header {
++  display: flex;
++  justify-content: space-between;
++  align-items: flex-end;
++  gap: 24px;
++  flex-wrap: wrap;
++  padding: 0 var(--page-gutter);
++}
++
++.sports__label {
++  font-family: var(--font-mono);
++  font-size: 12px;
++  letter-spacing: 0.18em;
++  color: var(--accent-orange);
++}
++
++.sports__title {
++  margin: 10px 0 0;
++  font-family: var(--font-heading);
++  font-weight: 900;
++  font-size: clamp(52px, 7vw, 104px);
++  line-height: 0.88;
++  text-transform: uppercase;
++}
++
++.sports__controls {
++  display: flex;
++  gap: 8px;
++  flex-wrap: wrap;
++  align-items: center;
++}
++
++.sports__filters {
++  display: flex;
++  gap: 8px;
++  flex-wrap: wrap;
++}
++
++.sports__filter {
++  padding: 10px 16px;
++  border: 1px solid var(--border-light);
++  background: transparent;
++  color: var(--text-primary);
++  font-family: var(--font-body);
++  font-size: 13px;
++  font-weight: 500;
++  letter-spacing: 0.08em;
++  text-transform: uppercase;
++  transition: all 0.2s;
++}
++
++.sports__filter--active {
++  background: var(--accent-orange);
++  border-color: var(--accent-orange);
++  color: var(--bg-primary);
++}
++
++.sports__arrows {
++  display: flex;
++  gap: 6px;
++  margin-left: 12px;
++}
++
++.sports__arrow {
++  width: 44px;
++  height: 44px;
++  border: 1px solid var(--border-light);
++  background: transparent;
++  color: var(--text-primary);
++  font-size: 18px;
++  transition: all 0.2s;
++}
++
++.sports__arrow:hover {
++  background: var(--accent-orange);
++  border-color: var(--accent-orange);
++  color: var(--bg-primary);
++}
++
++.sports__rail {
++  display: flex;
++  gap: 16px;
++  overflow-x: auto;
++  scroll-snap-type: x mandatory;
++  padding: 40px var(--page-gutter) 16px;
++  scroll-padding-left: var(--page-gutter);
++}
++
++.sports__rail::-webkit-scrollbar {
++  height: 4px;
++}
++
++.sports__card {
++  flex: none;
++  width: 290px;
++  scroll-snap-align: start;
++  display: flex;
++  flex-direction: column;
++  background: var(--bg-tertiary);
++  border: 1px solid var(--border-dark);
++  color: var(--text-primary);
++  transition: border-color 0.25s, transform 0.25s;
++}
++
++.sports__card:hover {
++  border-color: var(--accent-orange);
++  transform: translateY(-4px);
++  color: var(--text-primary);
++}
++
++.sports__card-image {
++  position: relative;
++  height: 320px;
++  overflow: hidden;
++  background: repeating-linear-gradient(135deg, #131720 0 10px, #0f121a 10px 20px);
++}
++
++.sports__card-placeholder {
++  position: absolute;
++  left: 16px;
++  bottom: 16px;
++  font-family: var(--font-mono);
++  font-size: 10px;
++  color: #4a5161;
++}
++
++.sports__card-number {
++  position: absolute;
++  top: 10px;
++  left: 14px;
++  font-family: var(--font-heading);
++  font-weight: 900;
++  font-size: 72px;
++  line-height: 1;
++  color: transparent;
++  -webkit-text-stroke: 1px var(--accent-orange);
++}
++
++.sports__card-cat {
++  position: absolute;
++  top: 18px;
++  right: 16px;
++  padding: 4px 8px;
++  background: var(--bg-primary);
++  font-family: var(--font-mono);
++  font-size: 10px;
++  letter-spacing: 0.12em;
++  color: var(--text-secondary);
++  text-transform: uppercase;
++}
++
++.sports__card-body {
++  padding: 18px 18px 20px;
++  display: flex;
++  flex-direction: column;
++  gap: 14px;
++}
++
++.sports__card-name {
++  font-family: var(--font-heading);
++  font-weight: 800;
++  font-size: 38px;
++  line-height: 0.9;
++  text-transform: uppercase;
++}
++
++.sports__card-meta {
++  display: grid;
++  grid-template-columns: 1fr 1fr;
++  gap: 10px;
++  font-size: 13px;
++}
++
++.sports__card-meta-label {
++  font-family: var(--font-mono);
++  font-size: 10px;
++  letter-spacing: 0.12em;
++  color: var(--text-muted);
++}
++
++.sports__card-footer {
++  display: flex;
++  justify-content: space-between;
++  align-items: center;
++  padding-top: 12px;
++  border-top: 1px solid var(--border-dark);
++  font-size: 12px;
++  letter-spacing: 0.1em;
++  text-transform: uppercase;
++  color: var(--text-muted);
++}
++
++.sports__card-link {
++  color: var(--accent-orange);
++  font-weight: 700;
++}
++
++@media (max-width: 768px) {
++  .sports__arrows {
++    display: none;
++  }
++
++  .sports__card {
++    width: 260px;
++  }
++}
+diff --git a/src/components/SportsRail.jsx b/src/components/SportsRail.jsx
+new file mode 100644
+index 0000000..6b2cceb
+--- /dev/null
++++ b/src/components/SportsRail.jsx
+@@ -0,0 +1,77 @@
++import { useState, useRef } from 'react';
++import { sports, categories } from '../data/sports';
++import './SportsRail.css';
++
++function SportsRail() {
++  const [activeCat, setActiveCat] = useState('All');
++  const railRef = useRef(null);
++
++  const filtered = activeCat === 'All'
++    ? sports
++    : sports.filter(s => s.cat === activeCat);
++
++  const scroll = (dir) => {
++    railRef.current?.scrollBy({ left: dir * 306, behavior: 'smooth' });
++  };
++
++  return (
++    <section id="sports" className="sports">
++      <div className="sports__header">
++        <div>
++          <div className="sports__label">01 — THE ARENA</div>
++          <h2 className="sports__title">
++            {sports.length} sports.<br />One cup.
++          </h2>
++        </div>
++        <div className="sports__controls">
++          <div className="sports__filters">
++            {categories.map(cat => (
++              <button
++                key={cat}
++                className={`sports__filter ${activeCat === cat ? 'sports__filter--active' : ''}`}
++                onClick={() => setActiveCat(cat)}
++              >
++                {cat}
++              </button>
++            ))}
++          </div>
++          <div className="sports__arrows">
++            <button className="sports__arrow" onClick={() => scroll(-1)}>←</button>
++            <button className="sports__arrow" onClick={() => scroll(1)}>→</button>
++          </div>
++        </div>
++      </div>
++
++      <div ref={railRef} className="sports__rail">
++        {filtered.map(sp => (
++          <a key={sp.slug} href={`#sport-${sp.slug}`} className="sports__card">
++            <div className="sports__card-image">
++              <div className="sports__card-placeholder">[ {sp.name} action shot ]</div>
++              <div className="sports__card-number">{sp.n}</div>
++              <div className="sports__card-cat">{sp.cat}</div>
++            </div>
++            <div className="sports__card-body">
++              <div className="sports__card-name">{sp.name}</div>
++              <div className="sports__card-meta">
++                <div>
++                  <div className="sports__card-meta-label">CATEGORY</div>
++                  {sp.gender}
++                </div>
++                <div>
++                  <div className="sports__card-meta-label">FORMAT</div>
++                  {sp.format}
++                </div>
++              </div>
++              <div className="sports__card-footer">
++                <span>Rules · fixtures</span>
++                <span className="sports__card-link">Details →</span>
++              </div>
++            </div>
++          </a>
++        ))}
++      </div>
++    </section>
++  );
++}
++
++export default SportsRail;
+diff --git a/src/data/sports.js b/src/data/sports.js
+new file mode 100644
+index 0000000..926a384
+--- /dev/null
++++ b/src/data/sports.js
+@@ -0,0 +1,27 @@
++const raw = [
++  ['Cricket', 'Field', 'Men', 'Knockout'],
++  ['Football', 'Field', 'Men · Women', 'League + KO'],
++  ['Athletics', 'Field', 'Men · Women', 'Heats + Finals'],
++  ['Kabaddi', 'Field', 'Men', 'Knockout'],
++  ['Tug of War', 'Field', 'Men · Women', 'Knockout'],
++  ['Frisbee', 'Field', 'Mixed', 'League + KO'],
++  ['Basketball', 'Court', 'Men · Women', 'League + KO'],
++  ['Volleyball', 'Court', 'Men · Women', 'Knockout'],
++  ['Pickleball', 'Court', 'Doubles', 'Round robin'],
++  ['Lawn Tennis', 'Court', 'Men · Women', 'Knockout'],
++  ['Badminton', 'Indoor', 'Men · Women', 'Team KO'],
++  ['Table Tennis', 'Indoor', 'Men · Women', 'Team KO'],
++  ['Chess', 'Indoor', 'Mixed team', 'Swiss'],
++  ['Rifle Shooting', 'Indoor', 'Men · Women', 'Qualification + Final'],
++];
++
++export const sports = raw.map((s, i) => ({
++  n: String(i + 1).padStart(2, '0'),
++  name: s[0],
++  cat: s[1],
++  gender: s[2],
++  format: s[3],
++  slug: s[0].toLowerCase().replace(/\s/g, '-'),
++}));
++
++export const categories = ['All', 'Field', 'Court', 'Indoor'];

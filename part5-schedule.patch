@@ -1,0 +1,365 @@
+diff --git a/src/App.jsx b/src/App.jsx
+index 18163f0..b8c59eb 100644
+--- a/src/App.jsx
++++ b/src/App.jsx
+@@ -1,5 +1,8 @@
+ import Ticker from './components/Ticker';
+ import Navbar from './components/Navbar';
++import Hero from './components/Hero';
++import SportsRail from './components/SportsRail';
++import Schedule from './components/Schedule';
+ import Footer from './components/Footer';
+ 
+ function App() {
+@@ -7,9 +10,12 @@ function App() {
+     <div className="app">
+       <Ticker />
+       <Navbar />
++      <Hero />
++      <SportsRail />
+ 
+       <main>
+-        {/* Hero, Sports, Schedule, Standings, etc. — coming in future commits */}
++        <Schedule />
++        {/* Standings, etc. — coming in future commits */}
+       </main>
+ 
+       <Footer />
+diff --git a/src/components/Schedule.css b/src/components/Schedule.css
+new file mode 100644
+index 0000000..357b7f9
+--- /dev/null
++++ b/src/components/Schedule.css
+@@ -0,0 +1,186 @@
++.schedule {
++  padding: 90px var(--page-gutter);
++  background: var(--bg-secondary);
++  border-top: 1px solid var(--border-dark);
++  border-bottom: 1px solid var(--border-dark);
++}
++
++.schedule__header {
++  display: flex;
++  justify-content: space-between;
++  align-items: flex-end;
++  gap: 24px;
++  flex-wrap: wrap;
++}
++
++.schedule__label {
++  font-family: var(--font-mono);
++  font-size: 12px;
++  letter-spacing: 0.18em;
++  color: var(--accent-orange);
++}
++
++.schedule__title {
++  margin: 10px 0 0;
++  font-family: var(--font-heading);
++  font-weight: 900;
++  font-size: clamp(52px, 7vw, 104px);
++  line-height: 0.88;
++  text-transform: uppercase;
++}
++
++.schedule__subtitle {
++  margin: 14px 0 0;
++  font-size: 14px;
++  color: var(--text-muted);
++}
++
++.schedule__actions {
++  display: flex;
++  gap: 10px;
++  flex-wrap: wrap;
++}
++
++.schedule__select {
++  height: 46px;
++  padding: 0 14px;
++  background: var(--bg-primary);
++  color: var(--text-primary);
++  border: 1px solid var(--border-light);
++  font-family: var(--font-body);
++  font-size: 14px;
++}
++
++.schedule__pdf {
++  height: 46px;
++  display: flex;
++  align-items: center;
++  padding: 0 18px;
++  border: 1px solid var(--border-light);
++  font-size: 13px;
++  font-weight: 500;
++  letter-spacing: 0.1em;
++  text-transform: uppercase;
++  transition: border-color 0.2s;
++}
++
++.schedule__pdf:hover {
++  border-color: var(--text-primary);
++  color: var(--text-primary);
++}
++
++.schedule__days {
++  display: grid;
++  grid-template-columns: repeat(7, minmax(96px, 1fr));
++  overflow-x: auto;
++  margin-top: 40px;
++  border-bottom: 1px solid var(--border-mid);
++}
++
++.schedule__day {
++  padding: 16px 4px;
++  background: transparent;
++  border: 0;
++  border-bottom: 3px solid transparent;
++  color: var(--text-muted);
++  text-align: left;
++  cursor: pointer;
++  transition: color 0.2s, border-color 0.2s;
++}
++
++.schedule__day--active {
++  border-bottom-color: var(--accent-orange);
++  color: var(--text-primary);
++}
++
++.schedule__day-label {
++  font-family: var(--font-heading);
++  font-weight: 800;
++  font-size: clamp(24px, 3vw, 38px);
++  line-height: 1;
++  text-transform: uppercase;
++}
++
++.schedule__day-date {
++  font-family: var(--font-mono);
++  font-size: 11px;
++  letter-spacing: 0.1em;
++  margin-top: 4px;
++}
++
++.schedule__table-wrap {
++  overflow-x: auto;
++}
++
++.schedule__table {
++  min-width: 720px;
++}
++
++.schedule__row {
++  display: grid;
++  grid-template-columns: 90px 150px 1fr 200px 130px;
++  gap: 16px;
++  align-items: center;
++  padding: 18px 0;
++  border-bottom: 1px solid var(--border-dark);
++}
++
++.schedule__row--header {
++  padding: 14px 0;
++  font-family: var(--font-mono);
++  font-size: 10px;
++  letter-spacing: 0.16em;
++  color: var(--text-muted);
++}
++
++.schedule__row--data:hover {
++  background: #10141b;
++}
++
++.schedule__time {
++  font-family: var(--font-mono);
++  font-size: 14px;
++}
++
++.schedule__sport {
++  font-size: 12px;
++  font-weight: 700;
++  letter-spacing: 0.1em;
++  text-transform: uppercase;
++  color: var(--accent-amber);
++}
++
++.schedule__match {
++  font-size: 16px;
++  font-weight: 500;
++}
++
++.schedule__venue {
++  font-size: 14px;
++  color: var(--text-secondary);
++}
++
++.schedule__status {
++  justify-self: end;
++  padding: 5px 10px;
++  font-family: var(--font-mono);
++  font-size: 11px;
++  background: #151922;
++  color: var(--text-secondary);
++}
++
++.schedule__cell--right {
++  text-align: right;
++}
++
++.schedule__empty {
++  padding: 40px 0;
++  color: var(--text-muted);
++  font-size: 15px;
++}
++
++@media (max-width: 768px) {
++  .schedule__days {
++    grid-template-columns: repeat(7, 100px);
++  }
++}
+diff --git a/src/components/Schedule.jsx b/src/components/Schedule.jsx
+new file mode 100644
+index 0000000..440f1f2
+--- /dev/null
++++ b/src/components/Schedule.jsx
+@@ -0,0 +1,82 @@
++import { useState } from 'react';
++import { dayLabels, fixtures, sportOptions } from '../data/fixtures';
++import './Schedule.css';
++
++function Schedule() {
++  const [activeDay, setActiveDay] = useState(1);
++  const [activeSport, setActiveSport] = useState('All sports');
++
++  const dayFixtures = fixtures[activeDay] || [];
++  const filtered = activeSport === 'All sports'
++    ? dayFixtures
++    : dayFixtures.filter(f => f.sport === activeSport);
++
++  return (
++    <section id="schedule" className="schedule">
++      <div className="schedule__header">
++        <div>
++          <div className="schedule__label">02 — FIXTURES</div>
++          <h2 className="schedule__title">What's on</h2>
++          <p className="schedule__subtitle">
++            Provisional fixtures — final draw published after registrations close.
++          </p>
++        </div>
++        <div className="schedule__actions">
++          <select
++            className="schedule__select"
++            value={activeSport}
++            onChange={e => setActiveSport(e.target.value)}
++          >
++            {sportOptions.map(opt => (
++              <option key={opt} value={opt}>{opt}</option>
++            ))}
++          </select>
++          <a href="#" className="schedule__pdf">↓ PDF schedule</a>
++        </div>
++      </div>
++
++      <div className="schedule__days">
++        {dayLabels.map((d, i) => (
++          <button
++            key={i}
++            className={`schedule__day ${activeDay === i ? 'schedule__day--active' : ''}`}
++            onClick={() => setActiveDay(i)}
++          >
++            <div className="schedule__day-label">{d.label}</div>
++            <div className="schedule__day-date">{d.date}</div>
++          </button>
++        ))}
++      </div>
++
++      <div className="schedule__table-wrap">
++        <div className="schedule__table">
++          <div className="schedule__row schedule__row--header">
++            <span>TIME</span>
++            <span>SPORT</span>
++            <span>FIXTURE</span>
++            <span>VENUE</span>
++            <span className="schedule__cell--right">STATUS</span>
++          </div>
++
++          {filtered.map((f, i) => (
++            <div key={i} className="schedule__row schedule__row--data">
++              <span className="schedule__time">{f.time}</span>
++              <span className="schedule__sport">{f.sport}</span>
++              <span className="schedule__match">{f.match}</span>
++              <span className="schedule__venue">{f.venue}</span>
++              <span className="schedule__status">Upcoming</span>
++            </div>
++          ))}
++
++          {filtered.length === 0 && (
++            <div className="schedule__empty">
++              No fixtures for this sport on this day.
++            </div>
++          )}
++        </div>
++      </div>
++    </section>
++  );
++}
++
++export default Schedule;
+diff --git a/src/data/fixtures.js b/src/data/fixtures.js
+new file mode 100644
+index 0000000..1abe221
+--- /dev/null
++++ b/src/data/fixtures.js
+@@ -0,0 +1,52 @@
++export const dayLabels = [
++  { label: 'Day 1', date: '08 Feb · Opening' },
++  { label: 'Day 2', date: '09 Feb · Tue' },
++  { label: 'Day 3', date: '10 Feb · Wed' },
++  { label: 'Day 4', date: '11 Feb · Thu' },
++  { label: 'Day 5', date: '12 Feb · Fri' },
++  { label: 'Day 6', date: '13 Feb · Sat' },
++  { label: 'Day 7', date: '14 Feb · Closing' },
++];
++
++export const fixtures = [
++  [
++    { time: '08:00', sport: 'Ceremony', match: 'Torch run & opening ceremony', venue: 'Main Ground' },
++  ],
++  [
++    { time: '10:00', sport: 'Football', match: 'PDEU vs Nirma University', venue: 'Football Ground' },
++    { time: '11:30', sport: 'Chess', match: 'Rounds 1–2 · Mixed team', venue: 'Seminar Hall' },
++    { time: '14:00', sport: 'Basketball', match: 'DAU vs IIT Gandhinagar', venue: 'Basketball Court' },
++    { time: '17:00', sport: 'Cricket', match: 'Ahmedabad Univ. vs GNLU', venue: 'Cricket Ground' },
++  ],
++  [
++    { time: '09:00', sport: 'Badminton', match: 'Women · Round of 16', venue: 'Indoor Sports Complex' },
++    { time: '11:00', sport: 'Kabaddi', match: 'PDEU vs LDCE', venue: 'Kabaddi Court' },
++    { time: '14:00', sport: 'Volleyball', match: 'Women · Quarterfinals', venue: 'Volleyball Court' },
++    { time: '16:00', sport: 'Tug of War', match: 'Men · Knockouts', venue: 'Main Ground' },
++  ],
++  [
++    { time: '09:00', sport: 'Athletics', match: '100m / 400m heats', venue: 'Track' },
++    { time: '11:00', sport: 'Rifle Shooting', match: '10m Air Rifle · Qualification', venue: 'Shooting Range' },
++    { time: '14:00', sport: 'Frisbee', match: 'Pool matches', venue: 'Main Ground' },
++    { time: '17:00', sport: 'Football', match: 'Quarterfinals', venue: 'Football Ground' },
++  ],
++  [
++    { time: '09:00', sport: 'Pickleball', match: 'Doubles · Round robin', venue: 'Pickleball Courts' },
++    { time: '10:00', sport: 'Table Tennis', match: 'Men · Semifinals', venue: 'Indoor Sports Complex' },
++    { time: '11:00', sport: 'Athletics', match: 'Finals · Relay', venue: 'Track' },
++    { time: '15:00', sport: 'Basketball', match: 'Semifinals', venue: 'Basketball Court' },
++  ],
++  [
++    { time: '10:00', sport: 'Volleyball', match: 'Finals', venue: 'Volleyball Court' },
++    { time: '14:00', sport: 'Football', match: 'Final', venue: 'Football Ground' },
++  ],
++  [
++    { time: '18:00', sport: 'Ceremony', match: 'Closing ceremony & Energy Cup trophy', venue: 'Main Ground' },
++  ],
++];
++
++export const sportOptions = [
++  'All sports', 'Ceremony', 'Cricket', 'Football', 'Athletics', 'Kabaddi',
++  'Tug of War', 'Frisbee', 'Basketball', 'Volleyball', 'Pickleball',
++  'Lawn Tennis', 'Badminton', 'Table Tennis', 'Chess', 'Rifle Shooting',
++];

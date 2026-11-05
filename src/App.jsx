@@ -2,6 +2,7 @@ import Ticker from './components/Ticker';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import SportsRail from './components/SportsRail';
+import Schedule from './components/Schedule';
 import Footer from './components/Footer';
 
 function App() {
@@ -13,7 +14,8 @@ function App() {
       <SportsRail />
 
       <main>
-        {/* Schedule, Standings, etc. — coming in future commits */}
+        <Schedule />
+        {/* Standings, etc. — coming in future commits */}
       </main>
 
       <Footer />

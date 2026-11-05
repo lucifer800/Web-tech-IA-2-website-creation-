@@ -1,0 +1,28 @@
+:root {
+  /* Backgrounds */
+  --bg-primary: #07090d;
+  --bg-secondary: #0b0e13;
+  --bg-tertiary: #0d1016;
+
+  /* Borders */
+  --border-dark: #1b2029;
+  --border-mid: #232833;
+  --border-light: #343b48;
+
+  /* Text */
+  --text-primary: #eef0f3;
+  --text-secondary: #b7bdc8;
+  --text-muted: #8b92a0;
+
+  /* Accents */
+  --accent-orange: #ff6a1f;
+  --accent-amber: #ffb21f;
+
+  /* Fonts */
+  --font-heading: 'Big Shoulders Display', sans-serif;
+  --font-body: 'Archivo', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  /* Spacing */
+  --page-gutter: clamp(16px, 4vw, 56px);
+}

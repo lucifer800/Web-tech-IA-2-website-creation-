@@ -5,6 +5,9 @@ import SportsRail from './components/SportsRail';
 import Schedule from './components/Schedule';
 import Standings from './components/Standings';
 import Legacy from './components/Legacy';
+import Partners from './components/Partners';
+import FAQ from './components/FAQ';
+import Register from './components/Register';
 import Footer from './components/Footer';
 
 function App() {
@@ -19,6 +22,9 @@ function App() {
         <Schedule />
         <Standings />
         <Legacy />
+        <Partners />
+        <FAQ />
+        <Register />
       </main>
 
       <Footer />

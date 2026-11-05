@@ -1,0 +1,460 @@
+diff --git a/src/App.jsx b/src/App.jsx
+index 18163f0..b77747f 100644
+--- a/src/App.jsx
++++ b/src/App.jsx
+@@ -1,5 +1,6 @@
+ import Ticker from './components/Ticker';
+ import Navbar from './components/Navbar';
++import Hero from './components/Hero';
+ import Footer from './components/Footer';
+ 
+ function App() {
+@@ -7,9 +8,10 @@ function App() {
+     <div className="app">
+       <Ticker />
+       <Navbar />
++      <Hero />
+ 
+       <main>
+-        {/* Hero, Sports, Schedule, Standings, etc. — coming in future commits */}
++        {/* Sports, Schedule, Standings, etc. — coming in future commits */}
+       </main>
+ 
+       <Footer />
+diff --git a/src/components/Hero.css b/src/components/Hero.css
+new file mode 100644
+index 0000000..7740d18
+--- /dev/null
++++ b/src/components/Hero.css
+@@ -0,0 +1,258 @@
++.hero {
++  position: relative;
++  min-height: min(92vh, 880px);
++  display: flex;
++  flex-direction: column;
++  justify-content: flex-end;
++  overflow: hidden;
++}
++
++.hero__bg {
++  position: absolute;
++  inset: -60px 0 0 0;
++  background: repeating-linear-gradient(135deg, #10141b 0 14px, #0c0f15 14px 28px);
++  will-change: transform;
++}
++
++.hero__placeholder {
++  position: absolute;
++  top: 120px;
++  right: var(--page-gutter);
++  font-family: var(--font-mono);
++  font-size: 11px;
++  color: #4a5161;
++  letter-spacing: 0.1em;
++}
++
++.hero__overlay {
++  position: absolute;
++  inset: 0;
++  background: linear-gradient(180deg, rgba(7, 9, 13, 0.15) 0%, rgba(7, 9, 13, 0.6) 50%, #07090d 100%);
++}
++
++.hero__charge-bar {
++  position: absolute;
++  left: var(--page-gutter);
++  right: var(--page-gutter);
++  top: 96px;
++  height: 2px;
++  background: var(--border-dark);
++}
++
++.hero__charge-fill {
++  height: 100%;
++  background: var(--accent-orange);
++  animation: charge 2.4s cubic-bezier(0.2, 0.7, 0.2, 1) both;
++}
++
++.hero__content {
++  position: relative;
++  display: grid;
++  grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
++  gap: 48px;
++  align-items: end;
++  padding: 140px var(--page-gutter) 56px;
++}
++
++.hero__left {
++  animation: rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) both;
++}
++
++.hero__tags {
++  display: flex;
++  gap: 14px;
++  flex-wrap: wrap;
++  align-items: center;
++  font-family: var(--font-mono);
++  font-size: 12px;
++  letter-spacing: 0.14em;
++  color: var(--text-secondary);
++  text-transform: uppercase;
++}
++
++.hero__badge {
++  padding: 5px 10px;
++  background: var(--accent-orange);
++  color: var(--bg-primary);
++  font-weight: 600;
++}
++
++.hero__title {
++  margin: 22px 0 0;
++  font-family: var(--font-heading);
++  font-weight: 900;
++  font-size: clamp(84px, 13vw, 220px);
++  line-height: 0.8;
++  letter-spacing: -0.01em;
++  text-transform: uppercase;
++}
++
++.hero__accent {
++  color: var(--accent-orange);
++}
++
++.hero__desc {
++  max-width: 540px;
++  margin: 26px 0 0;
++  font-size: 19px;
++  line-height: 1.5;
++  color: var(--text-secondary);
++}
++
++.hero__actions {
++  display: flex;
++  gap: 14px;
++  flex-wrap: wrap;
++  margin-top: 34px;
++}
++
++.hero__cta {
++  padding: 18px 30px;
++  font-weight: 700;
++  font-size: 15px;
++  letter-spacing: 0.1em;
++  text-transform: uppercase;
++  transition: background 0.2s, border-color 0.2s;
++}
++
++.hero__cta--primary {
++  background: var(--accent-orange);
++  color: var(--bg-primary);
++  animation: pulse 2.2s infinite;
++}
++
++.hero__cta--primary:hover {
++  background: var(--accent-amber);
++  color: var(--bg-primary);
++}
++
++.hero__cta--outline {
++  padding: 18px 26px;
++  border: 1px solid var(--border-light);
++  font-weight: 500;
++}
++
++.hero__cta--outline:hover {
++  border-color: var(--text-primary);
++  color: var(--text-primary);
++}
++
++.hero__clock-card {
++  justify-self: end;
++  width: 100%;
++  max-width: 520px;
++  background: rgba(13, 16, 22, 0.92);
++  border: 1px solid var(--border-mid);
++  animation: rise 0.9s 0.2s cubic-bezier(0.2, 0.7, 0.2, 1) both;
++}
++
++.hero__clock-header {
++  display: flex;
++  justify-content: space-between;
++  align-items: center;
++  padding: 12px 18px;
++  border-bottom: 1px solid var(--border-mid);
++  font-family: var(--font-mono);
++  font-size: 11px;
++  letter-spacing: 0.14em;
++  text-transform: uppercase;
++  color: var(--text-secondary);
++}
++
++.hero__clock-tag {
++  color: var(--accent-orange);
++}
++
++.hero__clock-grid {
++  display: grid;
++  grid-template-columns: repeat(4, 1fr);
++  gap: 8px;
++  padding: 18px;
++}
++
++.hero__clock-unit {
++  display: flex;
++  flex-direction: column;
++  align-items: center;
++  gap: 8px;
++}
++
++.hero__clock-value {
++  position: relative;
++  width: 100%;
++  background: var(--bg-primary);
++  border: 1px solid #1f242e;
++  text-align: center;
++  font-family: var(--font-heading);
++  font-weight: 800;
++  font-size: clamp(44px, 5vw, 68px);
++  line-height: 1.15;
++}
++
++.hero__clock-divider {
++  position: absolute;
++  left: 0;
++  right: 0;
++  top: 50%;
++  height: 1px;
++  background: var(--bg-primary);
++  box-shadow: 0 1px 0 var(--border-dark);
++}
++
++.hero__clock-label {
++  font-family: var(--font-mono);
++  font-size: 10px;
++  letter-spacing: 0.18em;
++  color: var(--text-muted);
++}
++
++.hero__stats {
++  position: relative;
++  display: grid;
++  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
++  border-top: 1px solid var(--border-dark);
++}
++
++.hero__stat {
++  padding: 22px var(--page-gutter);
++  border-right: 1px solid var(--border-dark);
++}
++
++.hero__stat:last-child {
++  border-right: none;
++}
++
++.hero__stat-value {
++  font-family: var(--font-heading);
++  font-weight: 900;
++  font-size: clamp(44px, 5vw, 64px);
++  line-height: 1;
++}
++
++.hero__stat-suffix {
++  color: var(--accent-orange);
++}
++
++.hero__stat-label {
++  margin-top: 4px;
++  font-family: var(--font-mono);
++  font-size: 11px;
++  letter-spacing: 0.16em;
++  color: var(--text-muted);
++  text-transform: uppercase;
++}
++
++@media (max-width: 768px) {
++  .hero__clock-card {
++    justify-self: stretch;
++    max-width: none;
++  }
++
++  .hero__stats {
++    grid-template-columns: repeat(2, 1fr);
++  }
++
++  .hero__stat:nth-child(2) {
++    border-right: none;
++  }
++}
+diff --git a/src/components/Hero.jsx b/src/components/Hero.jsx
+new file mode 100644
+index 0000000..be0d729
+--- /dev/null
++++ b/src/components/Hero.jsx
+@@ -0,0 +1,96 @@
++import { useRef, useEffect } from 'react';
++import useCountdown from '../hooks/useCountdown';
++import useAnimatedCount from '../hooks/useAnimatedCount';
++import './Hero.css';
++
++const STATS = [
++  { target: 75, suffix: '+', label: 'Institutes' },
++  { target: 8000, suffix: '+', label: 'Footfall' },
++  { target: 14, suffix: '', label: 'Sports' },
++  { target: 5, suffix: '', label: 'Days of play' },
++];
++
++function Hero() {
++  const clock = useCountdown();
++  const bgRef = useRef(null);
++  const statsRef = useRef(null);
++  const progress = useAnimatedCount(statsRef);
++
++  useEffect(() => {
++    const onScroll = () => {
++      if (bgRef.current) {
++        bgRef.current.style.transform = `translateY(${Math.min(window.scrollY, 900) * 0.3}px)`;
++      }
++    };
++    window.addEventListener('scroll', onScroll, { passive: true });
++    return () => window.removeEventListener('scroll', onScroll);
++  }, []);
++
++  return (
++    <header id="top" className="hero">
++      <div ref={bgRef} className="hero__bg">
++        <div className="hero__placeholder">[ HERO · torch run / Energy Cup '26 montage ]</div>
++      </div>
++      <div className="hero__overlay" />
++      <div className="hero__charge-bar">
++        <div className="hero__charge-fill" />
++      </div>
++
++      <div className="hero__content">
++        <div className="hero__left">
++          <div className="hero__tags">
++            <span className="hero__badge">PDEU's flagship sports fest</span>
++            <span>8–14 Feb 2027 · PDEU, Gandhinagar</span>
++          </div>
++          <h1 className="hero__title">
++            Energy<br />Cup <span className="hero__accent">'27</span>
++          </h1>
++          <p className="hero__desc">
++            Learn. Play. Win. Universities from across India meet on the PDEU grounds
++            for the region's biggest inter-university sports fest.
++          </p>
++          <div className="hero__actions">
++            <a href="#register" className="hero__cta hero__cta--primary">
++              Register your contingent →
++            </a>
++            <a href="#schedule" className="hero__cta hero__cta--outline">
++              View schedule
++            </a>
++          </div>
++        </div>
++
++        <div className="hero__clock-card">
++          <div className="hero__clock-header">
++            <span>Kick-off in</span>
++            <span className="hero__clock-tag">● Opening · 08.02.27</span>
++          </div>
++          <div className="hero__clock-grid">
++            {clock.map((c) => (
++              <div key={c.label} className="hero__clock-unit">
++                <div className="hero__clock-value">
++                  {c.value}
++                  <div className="hero__clock-divider" />
++                </div>
++                <span className="hero__clock-label">{c.label}</span>
++              </div>
++            ))}
++          </div>
++        </div>
++      </div>
++
++      <div ref={statsRef} className="hero__stats">
++        {STATS.map((stat) => (
++          <div key={stat.label} className="hero__stat">
++            <div className="hero__stat-value">
++              {Math.round(stat.target * progress).toLocaleString('en-IN')}
++              <span className="hero__stat-suffix">{stat.suffix}</span>
++            </div>
++            <div className="hero__stat-label">{stat.label}</div>
++          </div>
++        ))}
++      </div>
++    </header>
++  );
++}
++
++export default Hero;
+diff --git a/src/hooks/useAnimatedCount.js b/src/hooks/useAnimatedCount.js
+new file mode 100644
+index 0000000..381cd25
+--- /dev/null
++++ b/src/hooks/useAnimatedCount.js
+@@ -0,0 +1,34 @@
++import { useState, useEffect, useRef, useCallback } from 'react';
++
++export default function useAnimatedCount(targetRef, duration = 1400) {
++  const [progress, setProgress] = useState(0);
++  const started = useRef(false);
++
++  const animate = useCallback(() => {
++    if (started.current) return;
++    started.current = true;
++    const t0 = performance.now();
++    const step = (t) => {
++      const p = Math.min(1, (t - t0) / duration);
++      setProgress(1 - Math.pow(1 - p, 3));
++      if (p < 1) requestAnimationFrame(step);
++    };
++    requestAnimationFrame(step);
++  }, [duration]);
++
++  useEffect(() => {
++    const el = targetRef.current;
++    if (!el) return;
++
++    const observer = new IntersectionObserver(
++      ([entry]) => {
++        if (entry.isIntersecting) animate();
++      },
++      { threshold: 0.3 }
++    );
++    observer.observe(el);
++    return () => observer.disconnect();
++  }, [targetRef, animate]);
++
++  return progress;
++}
+diff --git a/src/hooks/useCountdown.js b/src/hooks/useCountdown.js
+new file mode 100644
+index 0000000..198dd5f
+--- /dev/null
++++ b/src/hooks/useCountdown.js
+@@ -0,0 +1,25 @@
++import { useState, useEffect } from 'react';
++
++const TARGET = new Date('2027-02-08T08:00:00+05:30').getTime();
++
++function pad(n) {
++  return String(Math.floor(n)).padStart(2, '0');
++}
++
++export default function useCountdown() {
++  const [now, setNow] = useState(Date.now());
++
++  useEffect(() => {
++    const id = setInterval(() => setNow(Date.now()), 1000);
++    return () => clearInterval(id);
++  }, []);
++
++  const diff = Math.max(0, (TARGET - now) / 1000);
++
++  return [
++    { value: pad(diff / 86400), label: 'DAYS' },
++    { value: pad((diff % 86400) / 3600), label: 'HRS' },
++    { value: pad((diff % 3600) / 60), label: 'MIN' },
++    { value: pad(diff % 60), label: 'SEC' },
++  ];
++}

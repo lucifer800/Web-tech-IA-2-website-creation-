@@ -3,6 +3,8 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import SportsRail from './components/SportsRail';
 import Schedule from './components/Schedule';
+import Standings from './components/Standings';
+import Legacy from './components/Legacy';
 import Footer from './components/Footer';
 
 function App() {
@@ -15,7 +17,8 @@ function App() {
 
       <main>
         <Schedule />
-        {/* Standings, etc. — coming in future commits */}
+        <Standings />
+        <Legacy />
       </main>
 
       <Footer />

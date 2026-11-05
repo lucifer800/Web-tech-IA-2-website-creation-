@@ -1,0 +1,127 @@
+.standings {
+  padding: 110px var(--page-gutter);
+}
+
+.standings__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr));
+  gap: 56px;
+}
+
+.standings__label {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  color: var(--accent-amber);
+}
+
+.standings__title {
+  margin: 10px 0 0;
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: clamp(52px, 7vw, 104px);
+  line-height: 0.88;
+  text-transform: uppercase;
+}
+
+.standings__accent {
+  color: var(--accent-amber);
+}
+
+.standings__desc {
+  max-width: 440px;
+  margin: 22px 0 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.standings__card {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-mid);
+  align-self: start;
+}
+
+.standings__card-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border-mid);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.standings__card-tag {
+  color: var(--text-muted);
+}
+
+.standings__row {
+  display: grid;
+  grid-template-columns: 40px 1fr 44px 44px 44px 64px;
+  gap: 8px;
+  align-items: center;
+  padding: 14px 20px;
+}
+
+.standings__row--header {
+  padding: 12px 20px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+}
+
+.standings__row--data {
+  border-top: 1px solid var(--border-dark);
+}
+
+.standings__row--leader {
+  background: rgba(255, 178, 31, 0.07);
+}
+
+.standings__rank {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 26px;
+  color: var(--text-muted);
+}
+
+.standings__rank--gold {
+  color: var(--accent-amber);
+}
+
+.standings__rank--top {
+  color: var(--text-primary);
+}
+
+.standings__name {
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.standings__cell--center {
+  text-align: center;
+}
+
+.standings__cell--gold {
+  color: var(--accent-amber);
+}
+
+.standings__cell--right {
+  text-align: right;
+}
+
+.standings__medal {
+  font-family: var(--font-mono);
+  font-size: 14px;
+}
+
+.standings__pts {
+  text-align: right;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 26px;
+}

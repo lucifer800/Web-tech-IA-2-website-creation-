@@ -5,7 +5,7 @@ import cricket from '../assets/sports/cricket.jpg';
 import football from '../assets/sports/football.jpg';
 import kabaddi from '../assets/sports/kabaddi.jpg';
 import tableTennis from '../assets/sports/table-tennis.jpg';
-import tennis from '../assets/sports/tennis.jpg';
+import tennis from '../assets/sports/lawn-tennis.jpg';
 import tugOfWar from '../assets/sports/tug-of-war.jpg';
 import volleyball from '../assets/sports/volleyball.jpg';
 import athletics from '../assets/sports/athletics.jpg';

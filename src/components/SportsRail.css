@@ -208,3 +208,17 @@
     width: 260px;
   }
 }
+
+/* Sport card photos */
+.sports__card-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: brightness(0.75) contrast(1.1);
+  transition: filter 0.3s, transform 0.4s;
+}
+.sports__card:hover .sports__card-photo {
+  filter: brightness(0.9) contrast(1.05);
+  transform: scale(1.05);
+}

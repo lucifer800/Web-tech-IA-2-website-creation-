@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { navLinks } from '../data/navigation';
 import './Navbar.css';
 
@@ -11,7 +12,7 @@ function Navbar() {
   return (
     <>
       <nav className="navbar">
-        <a href="#top" className="navbar__brand">
+        <Link to="/" className="navbar__brand">
           <div className="navbar__logo">E</div>
           <div className="navbar__title">
             <span className="navbar__name">
@@ -19,16 +20,18 @@ function Navbar() {
             </span>
             <span className="navbar__sub">SPORTS PDEU · GANDHINAGAR</span>
           </div>
-        </a>
+        </Link>
 
         <div className="navbar__links">
           {navLinks.map(link => (
-            <a key={link.href} href={link.href}>{link.label}</a>
+            link.to
+              ? <Link key={link.label} to={link.to}>{link.label}</Link>
+              : <a key={link.href} href={link.href}>{link.label}</a>
           ))}
         </div>
 
         <div className="navbar__actions">
-          <a href="#register" className="navbar__cta">Register</a>
+          <Link to="/register" className="navbar__cta">Register</Link>
           <button
             className="navbar__burger"
             onClick={toggleMenu}
@@ -42,18 +45,13 @@ function Navbar() {
       {menuOpen && (
         <div className="mobile-menu">
           {navLinks.map(link => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="mobile-menu__link"
-              onClick={closeMenu}
-            >
-              {link.label}
-            </a>
+            link.to
+              ? <Link key={link.label} to={link.to} className="mobile-menu__link" onClick={closeMenu}>{link.label}</Link>
+              : <a key={link.href} href={link.href} className="mobile-menu__link" onClick={closeMenu}>{link.label}</a>
           ))}
-          <a href="#register" className="mobile-menu__cta" onClick={closeMenu}>
+          <Link to="/register" className="mobile-menu__cta" onClick={closeMenu}>
             Register →
-          </a>
+          </Link>
         </div>
       )}
     </>

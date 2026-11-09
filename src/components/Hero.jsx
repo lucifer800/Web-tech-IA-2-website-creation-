@@ -1,4 +1,5 @@
 import { useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import useCountdown from '../hooks/useCountdown';
 import useAnimatedCount from '../hooks/useAnimatedCount';
 import './Hero.css';
@@ -50,9 +51,9 @@ function Hero() {
             for the region's biggest inter-university sports fest.
           </p>
           <div className="hero__actions">
-            <a href="#register" className="hero__cta hero__cta--primary">
+            <Link to="/register" className="hero__cta hero__cta--primary">
               Register your contingent →
-            </a>
+            </Link>
             <a href="#schedule" className="hero__cta hero__cta--outline">
               View schedule
             </a>

@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import { sports, categories } from '../data/sports';
+import sportImages from '../data/sportImages';
 import './SportsRail.css';
 
 function SportsRail() {
@@ -46,7 +47,11 @@ function SportsRail() {
         {filtered.map(sp => (
           <a key={sp.slug} href={`#sport-${sp.slug}`} className="sports__card">
             <div className="sports__card-image">
-              <div className="sports__card-placeholder">[ {sp.name} action shot ]</div>
+              {sportImages[sp.slug] ? (
+                <img src={sportImages[sp.slug]} alt={sp.name} className="sports__card-photo" />
+              ) : (
+                <div className="sports__card-placeholder">[ {sp.name} action shot ]</div>
+              )}
               <div className="sports__card-number">{sp.n}</div>
               <div className="sports__card-cat">{sp.cat}</div>
             </div>

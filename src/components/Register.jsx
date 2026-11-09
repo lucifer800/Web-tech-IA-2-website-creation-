@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './Register.css';
 
 function Register() {
@@ -10,7 +11,7 @@ function Register() {
           Bring your<br />university
         </h2>
         <div className="register__actions">
-          <a href="#" className="register__cta register__cta--primary">Start registration →</a>
+          <Link to="/register" className="register__cta register__cta--primary">Start registration →</Link>
           <a href="#" className="register__cta register__cta--outline">WhatsApp updates</a>
         </div>
       </div>
